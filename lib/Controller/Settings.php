@@ -273,8 +273,9 @@ class Settings extends Base
                 // Check for a trailing slash and add it if its not there
                 $value = rtrim($value, '/');
                 $value = rtrim($value, '\\') . DIRECTORY_SEPARATOR;
-                $value1 = rtrim($value, '\\') . DIRECTORY_SEPARATOR.'temp';
+                $value1 = realpath(rtrim($value, '\\') . DIRECTORY_SEPARATOR.'temp');
 
+                
                 // Attempt to add the directory specified
                 if (!file_exists($value1))
                     // Make the directory with broad permissions recursively (so will add the whole path)
