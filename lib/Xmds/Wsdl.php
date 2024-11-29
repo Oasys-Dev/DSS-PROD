@@ -33,7 +33,7 @@ class Wsdl
         ob_start();
         $wsdl = file_get_contents($this->path);
         $wsdl = str_replace('{{XMDS_LOCATION}}', $this->getRoot() . '?v=' . $this->version, $wsdl);
-        echo $wsdl;
+        echo htmlspecialchars($wsdl, ENT_QUOTES, 'UTF-8');
 
         // Get the contents of the buffer and work out its length
         $buffer = ob_get_contents();
