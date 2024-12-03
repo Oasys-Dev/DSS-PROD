@@ -1047,7 +1047,7 @@ public function checkPassCount($userID)
 
 public function oracle_odbc_execute($sql) {
 
-	$conn = oci_connect("xvsfdn", "G#4dL8pM@5aB", "10.128.230.243:9027/ubinedu");
+	$conn = oci_connect("xvsfdn", getenv("DB_PASSWORD"), "10.128.230.243:9027/ubinedu");
 
 	if(!$conn) {
 		//echo "Failed to connect to Oracle";
