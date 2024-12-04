@@ -457,7 +457,7 @@ public function oracle_odbc_connect($sql, $params) {
 			$oracle_log = $this->oracle_insert_stmt($sql, $params);
 		}
 		
-		$this->oracle_execute_data($conn, $oracle_log);
+		$this->oracle_execute_data($conn, $oracle_log,$params);
 	}
 
 	oci_close($conn);
@@ -508,12 +508,25 @@ public function sql_call_data($sql, $params) {
 
 
 
-public function oracle_execute_data($conn, $stmt) {
-	$sql = $stmt;
-	//echo $sql;
-	$compiled = oci_parse($conn, $sql);
-	$result = oci_execute($compiled);
-	oci_commit($conn);
+// public function oracle_execute_data($conn, $stmt) {
+// 	$sql = $stmt;
+// 	//echo $sql;
+// 	$compiled = oci_parse($conn, $sql);
+// 	$result = oci_execute($compiled);
+// 	oci_commit($conn);
+// }
+
+public function oracle_execute_data($conn, $stmt, $params) {
+    $sql = $stmt;
+    $compiled = oci_parse($conn, $sql);
+    
+    // Bind variables
+    foreach ($params as $param => $value) {
+        oci_bind_by_name($compiled, $param, $value);
+    }
+    
+    $result = oci_execute($compiled);
+    oci_commit($conn);
 }
 
 
