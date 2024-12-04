@@ -396,14 +396,14 @@ class Session implements \SessionHandlerInterface
         ';
 
         $params = [
-            'session_id' => $key,
-            'session_data' => $data,
-            'session_expiration' => $expiry,
-            'lastAccessed' => date('Y-m-d H:i:s', $lastAccessed),
-            'userId' => $this->userId,
+            'session_id' => filter_var($key,FILTER_SANITIZE_STRING),
+            'session_data' => filter_var($data,FILTER_SANITIZE_STRING),
+            'session_expiration' => filter_var($expiry,FILTER_SANITIZE_STRING),
+            'lastAccessed' => date('Y-m-d H:i:s', filter_var($lastAccessed,FILTER_VALIDATE_INT)),
+            'userId' => filter_var($this->userId,FILTER_VALIDATE_INT),
             'expired' => ($this->expired) ? 1 : 0,
-            'useragent' => substr($_SERVER['HTTP_USER_AGENT'], 0, 253),
-            'remoteaddr' => $this->getIp()
+            'useragent' => substr(filter_var($_SERVER['HTTP_USER_AGENT'],FILTER_SANITIZE_STRING), 0, 253),
+            'remoteaddr' => filter_var($this->getIp(),FILTER_SANITIZE_STRING)
         ];
 
         $this->getDb()->update($sql, $params);
@@ -431,12 +431,12 @@ class Session implements \SessionHandlerInterface
         ';
 
         $params = [
-            'session_data' => $data,
-            'session_expiration' => $expiry,
-            'lastAccessed' => date('Y-m-d H:i:s', $lastAccessed),
-            'userId' => $this->userId,
+            'session_data' => filter_var($data,FILTER_SANITIZE_STRING),
+            'session_expiration' => filter_var($expiry,FILTER_SANITIZE_STRING),
+            'lastAccessed' => date('Y-m-d H:i:s', filter_var($lastAccessed,FILTER_VALIDATE_INT)),
+            'userId' => filter_var($this->userId,FILTER_VALIDATE_INT),
             'expired' => ($this->expired) ? 1 : 0,
-            'session_id' => $key
+            'session_id' => filter_var($key,FILTER_SANITIZE_STRING)
         ];
 
         $this->getDb()->update($sql, $params);
