@@ -517,8 +517,8 @@ public function sql_call_data($sql, $params) {
 // }
 
 public function oracle_execute_data($conn, $stmt, $params) {
-    $sql = $stmt;
-    $compiled = oci_parse($conn, $sql);
+    
+    $compiled = oci_parse($conn, $stmt);
     
     // Bind variables
     foreach ($params as $param => $value) {
