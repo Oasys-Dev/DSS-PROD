@@ -516,18 +516,7 @@ public function sql_call_data($sql, $params) {
 // 	oci_commit($conn);
 // }
 
-public function oracle_execute_data($conn, $stmt, $params) {
-    
-    $compiled = oci_parse($conn, $stmt);
-    
-    // Bind variables
-    foreach ($params as $param => $value) {
-        oci_bind_by_name($compiled, $param, $value);
-    }
-    
-    $result = oci_execute($compiled);
-    oci_commit($conn);
-}
+
 
 
 public function hasWord($word, $txt) {
